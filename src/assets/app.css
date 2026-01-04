@@ -1,0 +1,383 @@
+/* .CardWithoutHeader > .card-header { display: none; } */
+
+/* .SpecificCard
+{
+    border: none;
+    box-shadow: none;
+} */
+#list-tab {
+  background-color: white;
+}
+.header-middle-img {
+  height: 75px;
+  width: 75px;
+  margin-bottom: 10px;
+}
+.header2 {
+  text-align: center;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.styleButton{
+  width: 100px;
+  height: 40px;
+}
+.container {
+  position: absolute;
+  top: 10px;
+  /* فاصله از بالا */
+  left: 5px;
+  /* فاصله از چپ */
+  right: 5px;
+  bottom: 20px;
+  width: 500px;
+  /* عرض کادر */
+  height: 250px;
+  /* ارتفاع کادر */
+  border: 2px solid #000;
+  /* حاشیه کادر */
+  box-sizing: border-box;
+  /* شامل حاشیه در ابعاد */
+}
+
+.hr {
+  border: 1px solid #000;
+  margin: 20px 0;
+}
+
+.table1 {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.td,
+.td1 {
+  border: 2px solid #000;
+  /* تغییر ضخامت مرز به 2 پیکسل */
+  padding: 10px;
+  /* فاصله داخلی سلول‌ها */
+  text-align: right;
+  /* تراز متن */
+  background-color: #eafcff;
+  width: 20%;
+  /* عرض برابر برای همه ستون‌ها */
+}
+
+.td1 {
+  text-align: left;
+  /* تراز متن برای td1 */
+}
+
+.c {
+  border: 2px solid #000;
+  padding-top: 300px;
+  /* فاصله داخلی */
+  text-align: left;
+  /* تراز متن */
+  width: 40%;
+  /* عرض بیشتر برای ستون با rowspan */
+}
+.en {
+  text-align: left;
+}
+.table2 {
+  width: 100%;
+  border-collapse: collapse;
+  /* برای ترکیب مرزها */
+}
+
+.table2 td {
+  border: 2px solid #000;
+
+  /* رنگ مرز مشکی */
+  padding: 10px;
+  /* فاصله داخلی */
+  text-align: right;
+  /* تراز متن */
+  background-color: #fff;
+  /* رنگ پس‌زمینه سفید */
+  width: 50%;
+  /* عرض برابر برای همه ستون‌ها */
+}
+.custom-table3 {
+  width: 100%;
+  border-collapse: collapse;
+  /* ترکیب مرزها */
+}
+
+.custom-table3 td {
+  border: 1px solid #000;
+  /* مرز مشکی */
+  padding: 5px;
+  /* فاصله داخلی */
+}
+
+.custom-table3 td:first-child {
+  width: 0px;
+  /* عرض ستون اول */
+}
+
+.custom-table3 td:nth-child(2) {
+  width: 5000px;
+  /* عرض ستون دوم */
+}
+.s {
+  background-color: #e9ad7b;
+  writing-mode: vertical-rl;
+  /* نوشتار عمودی */
+  transform: rotate(180deg);
+  /* چرخش متن */
+  text-align: center;
+  /* تراز متن */
+  height: 100px;
+  /* ارتفاع سلول */
+  line-height: 100px;
+  /* تراز عمودی متن */
+  /* width: 0px; */
+}
+.s5 {
+  background-color: #f18ce1;
+  writing-mode: vertical-rl;
+  /* نوشتار عمودی */
+  transform: rotate(180deg);
+  /* چرخش متن */
+  text-align: center;
+  /* تراز متن */
+  height: 300px;
+  width: 100px;
+  /* ارتفاع سلول */
+  line-height: 100px;
+  /* تراز عمودی متن */
+  /* width: 0px; */
+}
+.s3 {
+  background-color: #ff9c4b;
+  writing-mode: vertical-rl;
+  /* نوشتار عمودی */
+  transform: rotate(180deg);
+  /* چرخش متن */
+  text-align: center;
+  /* تراز متن */
+  height: 2000px;
+  /* ارتفاع سلول */
+  line-height: 100px;
+  width: 40px;
+  /* تراز عمودی متن */
+  /* width: 0px; */
+}
+.s2 {
+  background-color: #e9ad7b;
+  writing-mode: vertical-rl;
+  /* نوشتار عمودی */
+  transform: rotate(180deg);
+  /* چرخش متن */
+  text-align: center;
+  /* تراز متن */
+  height: 100px;
+  /* ارتفاع سلول */
+  /*line-height: 100px;
+        border: 1px solid #000;
+          /* مرز مشکی */
+  /* padding: 5px;*/
+}
+.s4 {
+  background-color: #e9ad7b;
+  writing-mode: vertical-rl;
+  /* نوشتار عمودی */
+  transform: rotate(180deg);
+  /* چرخش متن */
+  text-align: center;
+  /* تراز متن */
+  height: 100px;
+  /* ارتفاع سلول */
+  /*line-height: 100px;
+        border: 1px solid #000;
+          /* مرز مشکی */
+  /* padding: 5px;*/
+}
+.table-container {
+  display: flex;
+  /* قرار دادن جداول در کنار هم */
+  gap: 20px;
+  /* فاصله بین جداول */
+}
+
+.custom-table {
+  border-collapse: collapse;
+  /* ترکیب مرزها */
+  width: 5px;
+  /* عرض جدول */
+}
+
+.custom-table td {
+  border: 1px solid #000;
+  /* مرز مشکی */
+  padding: 5px;
+  /* فاصله داخلی */
+}
+.custom-table tr {
+  border: 1px solid #000;
+  /* مرز مشکی */
+  padding: 5px;
+  /* فاصله داخلی */
+}
+.small-table {
+  width: 50px;
+  /* عرض جدول اول */
+}
+
+.large-table {
+  width: 4550px;
+  /* عرض جدول دوم */
+}
+.custom-table4 {
+  width: 900px;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  height: 660px;
+  padding-right: 0px;
+  padding-top: 10px;
+  padding-left: 600px;
+}
+
+.custom-table4 td {
+  border: 1px solid #000;
+  padding: 5px;
+  /* vertical-align: top; */
+}
+.width {
+  width: 50%;
+}
+.top {
+  border: 1px solid #000;
+  padding: 10px;
+  vertical-align: top;
+}
+.custom-table5 {
+  width: 500px;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  height: 200px;
+  padding-right: 0px;
+  padding-top: 10px;
+  padding-left: 600px;
+}
+.custom-table5 td {
+  border: 1px solid #000;
+  padding: 5px;
+  /* vertical-align: top; */
+}
+
+.container1{
+  display: flex;
+  /* برای قرار دادن جداول در کنار هم */
+  justify-content: space-between;
+  /* فاصله بین جداول */
+}
+
+.custom-table5,
+.small-table {
+  border-collapse: collapse;
+  width: 100%;
+  /* عرض جدول */
+  margin: 10px;
+  /* فاصله از جدول دیگر */
+}
+
+.custom-table5 td,
+.small-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+.custom-table1 {
+  border-collapse: collapse;
+  /* ترکیب مرزها */
+  width: 5px;
+  /* عرض جدول */
+}
+
+.custom-table1 td {
+  border: 1px solid #000;
+  /* مرز مشکی */
+  padding: 5px;
+  /* فاصله داخلی */
+}
+
+.custom-table1 tr {
+  border: 1px solid #000;
+  /* مرز مشکی */
+  padding: 5px;
+  /* فاصله داخلی */
+}
+.s5 {
+  background-color: #ff9c4b;
+  writing-mode: vertical-rl;
+  /* نوشتار عمودی */
+  transform: rotate(180deg);
+  /* چرخش متن */
+  text-align: center;
+  /* تراز متن */
+  height: 1350px;
+  /* ارتفاع سلول */
+  line-height: 100px;
+  width: 40px;
+  /* تراز عمودی متن */
+  /* width: 0px; */
+}
+.s7{
+    background-color: #e9ad7b;
+      writing-mode: vertical-rl;
+      /* نوشتار عمودی */
+      transform: rotate(180deg);
+      /* چرخش متن */
+      text-align: center;
+      /* تراز متن */
+      height: 700px;
+      /* ارتفاع سلول */
+      line-height: 100px;
+      /* تراز عمودی متن */
+      /* width: 0px; */
+}
+.h{
+  height: 10%;
+}
+.s8{
+    background-color: #f19ac3;
+      writing-mode: vertical-rl;
+      /* نوشتار عمودی */
+      transform: rotate(180deg);
+      /* چرخش متن */
+      text-align: center;
+      /* تراز متن */
+      height: 500px;
+      /* ارتفاع سلول */
+      line-height: 100px;
+      /* تراز عمودی متن */
+      /* width: 0px; */
+}
+.custom-table6{
+
+  width: 900px;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    height: 500px;
+    padding-right: 0px;
+    padding-top: 10px;
+    padding-left: 600px;
+  }
+  
+  .custom-table6 td {
+    border: 1px solid #000;
+    padding: 5px;
+    /* vertical-align: top; */
+  }
+
+  .uploader-distance-error-list{
+    margin-bottom: 1.3em !important;
+  }

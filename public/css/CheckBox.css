@@ -1,0 +1,15 @@
+@media (min-width: 768px)
+{
+    .col-md-6
+    {
+        width: 100% !important
+    }
+}
+
+@media (min-width: 992px)
+{
+    .col-lg-4
+    {
+        width: 100% !important
+    }
+}

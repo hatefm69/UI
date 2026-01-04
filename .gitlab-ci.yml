@@ -1,0 +1,57 @@
+default:
+  image: repository-docker.omidtech.co.ir/docker:20.10.16
+  services:
+    - repository-docker.omidtech.co.ir/docker:20.10.16-dind
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  OT_IMAGE_NAME: "amls-ui"
+  OT_IMAGE: "amls-ui"
+  OT_IMAGE_TAG: $IMAGE_TAG
+
+stages:
+  - build
+  - deploy
+
+build-docker-image:
+  stage: build
+  only:
+    - main22
+  tags:
+    - soroush_docker
+  script:
+    - docker login -u "$OT_REGISTRY_U" -p "$OT_REGISTRY_P" $OT_REGISTRY
+    - docker build --pull -f Dockerfile  -t "$OT_REGISTRY/omidtech/amls/$OT_IMAGE:latest-dev" .
+    - docker push $OT_REGISTRY/omidtech/amls/$OT_IMAGE:latest-dev
+
+build-docker-image-t:
+  stage: build
+  only:
+    variables:
+      - $UPSTREAM == "amls-api"
+  tags:
+    - soroush_docker
+  script:
+    - echo "this image build with NAME ${OT_IMAGE} and tag ${OT_IMAGE_TAG}"
+    - docker login -u "$OT_REGISTRY_U" -p "$OT_REGISTRY_P" $OT_REGISTRY
+    - docker build --pull -f Dockerfile  -t "$OT_REGISTRY/omidtech/amls/$OT_IMAGE:$OT_IMAGE_TAG" --build-arg BASE_IMAGE_TAG=${OT_IMAGE_TAG} .
+    - docker push $OT_REGISTRY/omidtech/amls/$OT_IMAGE:${OT_IMAGE_TAG}
+    
+update-composer:
+  stage: deploy
+  image: repository-docker.omidtech.co.ir/bitnami/git
+  only:
+    variables:
+      - $UPSTREAM == "amls-api"
+  tags:
+    - soroush_docker
+  script:
+    - git config --global user.email "administrator@omidtech.co"
+    - git config --global user.name "administrator" 
+    - mkdir /omidtech && cd /omidtech
+    - git clone https://${DEVOPS_USER}:${DEVOPS_PASS}@git.omidtech.co.ir/devops-team/apps-composer.git
+    - cd apps-composer
+    - echo "NEW VERSION${OT_IMAGE_TAG}"
+    - sed -i "s/\bamls-ui\b.*$/amls-ui:${OT_IMAGE_TAG}/" ./applications/erp/docker-compose.yml
+    - git add *
+    - git commit -m "update image version to amls-ui:${OT_IMAGE_TAG}"
+    - git push

@@ -1,0 +1,63 @@
+{
+  "name": "AMLS",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "assert": "^2.0.0",
+    "axios": "^0.27.2",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "classnames": "^2.3.1",
+    "core": "file:./zeemaa/dist",
+    "crypto-browserify": "^3.12.0",
+    "http-browserify": "^1.7.0",
+    "https-browserify": "^1.0.0",
+    "moment": "^2.29.3",
+    "moment-jalaali": "^0.9.6",
+    "moment-range": "^4.0.2",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "prop-types": "^15.7.2",
+    "rc-trigger": "^5.3.1",
+    "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
+    "react-dom": "^18.2.0",
+    "react-jsbarcode": "^0.2.4",
+    "react-notification-system": "^0.4.0",
+    "react-onclickoutside": "^6.12.2",
+    "react-qr-code": "^2.0.7",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.2.1",
+    "react-scripts": "^5.0.1",
+    "react-tether": "^2.0.6",
+    "require": "^0.4.4",
+    "rimraf": "^3.0.0",
+    "stream-browserify": "^3.0.0",
+    "tty-browserify": "^0.0.1",
+    "url": "^0.11.0",
+    "util": "^0.12.4"
+  },
+  "scripts": {
+    "start": "rimraf ./build && (set PORT=1728 || export PORT=1728) && react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "Sample",
+  "main": "index.js",
+  "repository": "https://www.website.ir",
+  "author": "Omid-Tech",
+  "license": "MIT"
+}
