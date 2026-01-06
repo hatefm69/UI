@@ -8,7 +8,8 @@ import {
   DatePicker,
   CellContainer,
   Delimiter,
-  Table
+  Table,
+  FileUploader
 } from "core";
 import React from "react";
 import NotificationSystem from "react-notification-system";
@@ -24,7 +25,10 @@ export class StudentSection extends React.Component {
       updateKey: 1000,
       cities: [],
       familyRelationshipsTableData: [],
-      familyRelationships: []
+      familyRelationships: [],
+      isLoading: true,
+      relationUpdateKey: 50000,
+      cardUpdateKey: 60000,
     };
     this.notificationSystem = React.createRef();
     this.onAddFamilyRelationship = this.onAddFamilyRelationship.bind(this);
@@ -39,18 +43,10 @@ export class StudentSection extends React.Component {
         cityId: this.props.record.cityId,
         familyRelationshipsTableData: this.props.record.familyRelationshipsTableData,
         updateKey: this.state.updateKey + 1,
+        isLoading: false,
       });
       this.refreshDataForServer();
     }
-    // setTimeout(() => {
-    //   this.setState({
-    //     ...this.props.record,
-    //     isActive: this.props.record.isActive.toString(),
-    //     cityId: this.props.record.cityId,
-    //     familyRelationshipsTableData: this.props.record.familyRelationshipsTableData,
-    //     updateKey: this.state.updateKey + 1,
-    //   })
-    // }, 4000);
   };
 
   getCities = () => {
@@ -86,7 +82,7 @@ export class StudentSection extends React.Component {
       return Helpers.DisplayErrorMessage(
         this.notificationSystem,
         null,
-        "لطفا نام و نام خانوادگی خیشاوند را وارد کنید"
+        "لطفا نام و نام خانوادگی خویشاوند را وارد کنید"
       );
     if (
       this.state.familyRelationshipfullName.length <= 3
@@ -94,7 +90,7 @@ export class StudentSection extends React.Component {
       return Helpers.DisplayErrorMessage(
         this.notificationSystem,
         null,
-        "لطفا نام و نام خانوادگی خیشاوند را بیشتر از 3 کاراکتر وارد کنید"
+        "لطفا نام و نام خانوادگی خویشاوند را بیشتر از 3 کاراکتر وارد کنید"
       );
 
     return true;
@@ -115,7 +111,7 @@ export class StudentSection extends React.Component {
     ) {
       Helpers.DisplayErrorMessage(
         this.notificationSystem,
-        `برای خیشاوند نام و نام خانوادگی وارد نمایید.`
+        `برای خویشاوند نام و نام خانوادگی وارد نمایید.`
       );
       return;
     }
@@ -156,12 +152,16 @@ export class StudentSection extends React.Component {
       ],
     ]);
 
+    console.log("Changing test props");
+
     this.setState({
       familyRelationshipsTableData,
       familyRelationshipfullName: "",
       familyRelationshipId: "",
-      updateKey: this.state.updateKey + 1,
-    });
+      //relationUpdateKey: this.state.relationUpdateKey + 1,
+      //updateKey: this.state.updateKey + 1,
+      //cardUpdateKey: this.state.cardUpdateKey + 1
+    }, () => this.setState({ relationUpdateKey: this.state.relationUpdateKey + 1 }));
 
     this.refreshDataForServer();
     return true;
@@ -178,15 +178,18 @@ export class StudentSection extends React.Component {
   };
 
   onBeforeSubmit = () => {
-    if (this.state.familyRelationships.length <= 0)
+    if (this.state.familyRelationships.length <= 0) {
       Helpers.DisplayErrorMessage(
         this.notificationSystem,
-        `خیشاوندان را وارد نمایید.`
+        `خویشاوندان را وارد نمایید.`
       );
-    return;
+      return false;
+    }
+    return true;
   }
 
   refreshDataForServer = () => {
+
 
 
     this.setState(prevState => ({
@@ -194,16 +197,16 @@ export class StudentSection extends React.Component {
         familyRelationshipId: x[1].value,
         familyRelationshipfullName: x[0].value
       })),
-      updateKey: prevState.updateKey + 1,
+      updateKey: this.state.updateKey + 1,
     }));
 
     // this.setState({
     //   familyRelationships: this.state.familyRelationshipsTableData.map(x => ({
     //     // id:null,
     //     familyRelationshipId: x[1].value,
-    //     fullName: x[0].value
+    //     familyRelationshipfullName: x[0].value
     //   })),
-    //   updateKey: this.state.updateKey + 1,
+    //   relationUpdateKey: this.state.relationUpdateKey + 1,
     // });
   }
 
@@ -215,13 +218,15 @@ export class StudentSection extends React.Component {
         familyRelationshipfullName: "",
         firstName: "",
         lastName: "",
-        levelId: "",
+        //levelId: "",
+        levelId: null,
         cityId: "",
         isActive: "",
         birthDate: "",
         familyRelationshipsTableData: [],
         familyRelationships: [],
-        updateKey: this.state.updateKey + 1,
+        //updateKey: this.state.updateKey + 1,
+        cardUpdateKey: this.state.cardUpdateKey + 1,
       });
       Helpers.DisplaySuccessMessage(
         this.notificationSystem,
@@ -241,7 +246,7 @@ export class StudentSection extends React.Component {
   };
 
   render() {
-    return (
+    return !this.state.isLoading && (
       <>
         <Card
           hasCollapsibleButton
@@ -250,7 +255,7 @@ export class StudentSection extends React.Component {
           icon="forms"
           hasDefaultSaveButton
           statusColor="primary"
-          key={this.state.updateKey}
+          key={this.state.cardUpdateKey}
           submitUrl={
             this.props.record == null
               ? "/api/cmi/Student/Post"
@@ -309,7 +314,7 @@ export class StudentSection extends React.Component {
             readOnly
             minLength={2}
             maxLength={100}
-            key={this.state.updateKey}
+            // key={this.state.updateKey}
             initialValue={`${this.state.firstName} ${this.state.lastName}`}
             externalChangedValue={`${this.state.firstName} ${this.state.lastName}`}
             validateHandler={[Helpers.MinMaxLengthValidator,
@@ -355,14 +360,24 @@ export class StudentSection extends React.Component {
             mdCol={4}
           // disabled={this.props.familyRelationshipsTableDatatate.isReadOnly}
           />
+          <FileUploader
+            context={this}
+            name="files"
+            title="بارگزاری اطلاعات"
+            lgCol={4}
+            // key={this.state.updateKey}
+            validExtensions={[".xlsx", ".xls"]}
+            maxLength={1048576 * 5}
+            required={(!this.props.record)}
+          />
           <Delimiter />
           <CellContainer
             lgCol={12}
             mdCol={12}
-            header="خیشاوندان"
-            key={"familyRelationshipCellContainer" + this.state.updateKey}
+            header="خویشاوندان"
+          // key={"familyRelationshipCellContainer" + this.state.updateKey}
           >
-            <div className="row ">
+            <div className="row " key={this.state.relationUpdateKey}>
               <TextBox
                 context={this}
                 name="familyRelationshipfullName"
@@ -422,7 +437,7 @@ export class StudentSection extends React.Component {
             )}
             <Table
               hasDeleteButton={true}
-              key={this.state.updateKey}
+              key={"table" + this.state.relationUpdateKey}
               onDeleteButton={(e) => this.onDeleteFamilyRelationships(e)}
               data={this.state.familyRelationshipsTableData}
               minHeightTableWrapper={250}

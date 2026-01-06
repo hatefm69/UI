@@ -7,18 +7,18 @@ export default class StudentEditPage extends React.Component {
   constructor(props) {
     super(props);
     this.id = this.props.match.params.id;
-    this.state = { isLoading: false };
+    this.state = { isLoading: true };
     this.notificationSystem = React.createRef();
   }
 
   componentDidMount = () => {
-    this.setState({ isLoading: true });
+    //this.setState({ isLoading: true });
     Helpers.CallServer(
       "/api/cmi/Student/Get/" + this.id,
       {},
       (response) => {
         this.setState({
-          record: response.data,
+          record: response,
         });
       },
       (error) => HandleError(this.notificationSystem, error),

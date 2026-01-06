@@ -11,7 +11,8 @@ export default class StudentListPage extends React.Component {
     super(props);
     this.state = {
       cities: [],
-      isLoading: false
+      isLoading: false,
+      updateKey: 0,
 
     };
     this.notificationSystem = React.createRef();
@@ -35,12 +36,42 @@ export default class StudentListPage extends React.Component {
     );
   }
 
+  onDownloadFile = (e) => {
+    window.open(
+      '/api/cmi/Attachment/Download/' + e['id'],
+      '_blank'
+    );
+  };
+
+
+  OnClickDelete = (e) => {
+    const _this = this;
+    Helpers.CallServer(
+      "/api/cmi/Attachment/Delete/" + e['id'],
+      {
+        searchTerm: e['id'],
+        Id: e['id'],
+      }
+      ,
+      (res) => {
+        _this.setState({
+          updateKey: this.state.updateKey + 1,
+        });
+        Helpers.DisplaySuccessMessage(this.notificationSystem, 'فایل با موفقیت حذف شد.');
+      },
+      (error) => HandleError(error, this.notificationSystem, Helpers),
+      () => this.setState({ isLoading: false }), 'POST'
+    );
+
+  };
+
   render() {
     return (
       <>
         <PageMain
           title="فهرست دانش آموز ها"
           icon="list-search"
+          key={this.state.updateKey}
           topButtons={[
             {
               title: "افزودن دانش آموز",
@@ -57,6 +88,7 @@ export default class StudentListPage extends React.Component {
                 hideExportButton
                 context={this}
                 dataKey="id"
+                key={this.state.updateKey}
                 minHeightTableWrapper={MinGridHeight}
                 filterBgColor="primary"
                 name="gridStudentListPage"
@@ -121,6 +153,31 @@ export default class StudentListPage extends React.Component {
                     title: "وضعیت",
                     selectOptions: isActiveOptions()
                   }
+                ]}
+                moreInfoLinks={[
+                  {
+                    title: 'واحدهای متولی و همکار',
+                    icon: 'list',
+                    func: (e) => this.openUnitsModal(e),
+                    url: '',
+                  },
+
+                  {
+                    title: 'حذف فایل',
+                    icon: 'file-remove',
+                    func: (e) => this.OnClickDelete(e),
+                    url: '',
+                  },
+
+                  {
+                    title: 'دریافت فایل فلوچارت',
+                    icon: 'download',
+                    func: (e) => this.onDownloadFile(e),
+                    enable: (e) => {
+                      return true;
+                      // return e.hasFileTitle == 'دارد';
+                    },
+                  },
                 ]}
               />
             </div>
