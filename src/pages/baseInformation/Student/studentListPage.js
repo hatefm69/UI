@@ -4,6 +4,7 @@ import NotificationSystem from "react-notification-system";
 import { MinGridHeight } from "../../../utils/constants";
 import { GetUrl, HandleError } from "../../../utils/generals";
 import { isActiveOptions } from "../../../utils/selectOptionUtils";
+import { AttachmentModalSection } from "../../../sections/baseInformation/attachmentModalSection";
 
 
 export default class StudentListPage extends React.Component {
@@ -13,6 +14,8 @@ export default class StudentListPage extends React.Component {
       cities: [],
       isLoading: false,
       updateKey: 0,
+      showModal: false,
+      id: null,
 
     };
     this.notificationSystem = React.createRef();
@@ -38,7 +41,7 @@ export default class StudentListPage extends React.Component {
 
   onDownloadFile = (e) => {
     window.open(
-      '/api/cmi/Attachment/Download/' + e['id'],
+      '/api/cmi/Attachment/DownloadFirst/' + e['id'],
       '_blank'
     );
   };
@@ -47,7 +50,7 @@ export default class StudentListPage extends React.Component {
   OnClickDelete = (e) => {
     const _this = this;
     Helpers.CallServer(
-      "/api/cmi/Attachment/Delete/" + e['id'],
+      "/api/cmi/Attachment/DeleteAttachmentWithTableId/" + e['id'],
       {
         searchTerm: e['id'],
         Id: e['id'],
@@ -64,6 +67,12 @@ export default class StudentListPage extends React.Component {
     );
 
   };
+
+
+  openDetailModal = (e) => {
+    this.setState({ showModal: true, updateKey: this.state.updateKey + 1, id: e['id'] });
+  }
+
 
   render() {
     return (
@@ -156,10 +165,10 @@ export default class StudentListPage extends React.Component {
                 ]}
                 moreInfoLinks={[
                   {
-                    title: 'واحدهای متولی و همکار',
+                    title: 'جزِیات دانش آموز',
                     icon: 'list',
-                    func: (e) => this.openUnitsModal(e),
-                    url: '',
+                    func: (e) => this.openDetailModal(e),
+                    // url: GetUrl("attachmentModalSection"),
                   },
 
                   {
@@ -170,7 +179,7 @@ export default class StudentListPage extends React.Component {
                   },
 
                   {
-                    title: 'دریافت فایل فلوچارت',
+                    title: 'دریافت فایل',
                     icon: 'download',
                     func: (e) => this.onDownloadFile(e),
                     enable: (e) => {
@@ -181,6 +190,12 @@ export default class StudentListPage extends React.Component {
                 ]}
               />
             </div>
+            {this.state.showModal &&
+              <AttachmentModalSection
+                showModal={this.state.showModal}
+                record={this.state.id}
+              />
+            }
           </div>
         </PageMain>
         <NotificationSystem ref={this.notificationSystem} />
